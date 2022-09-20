@@ -1,2 +1,2 @@
 # datawrangling_1
-Data importa and data manipulation in tidy data 
+Data import and data manipulation in tidy data 
