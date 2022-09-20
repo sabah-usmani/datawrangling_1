@@ -1,21 +1,71 @@
 ---
-title: "Simple document"
-output: html_document
+title: "Data Import"
+output: github_document
 ---
 
-I'm an R Markdown document! 
+## Data Import: CSVs
 
-# Section 1
-
-Here's a **code chunk** that samples from 
-a _normal distribution_:
+Let's import data usign the readr package 
 
 ```{r}
-samp = rnorm(100)
-length(samp)
+library(tidyverse)
+library(dplyr)
+litters_df <- read_csv("data/FAS_litters.csv")
+litters_df <- janitor::clean_names(litters_df) #cleans the name of the functions 
+
+head(litters_df)
+tail(litters_df)
+
 ```
 
-# Section 2
+```{r, eval=FALSE}
+view(litters_df)
 
-I can take the mean of the sample, too!
-The mean is `r mean(samp)`.
+```
+
+```{r}
+skimr::skim(litters_df) #quick summary of the dataset 
+
+```
+
+"read_csv" options 
+
+```{r}
+read_csv("data/FAS_litters.csv", na = c("", "NA", "999", 999, 88)) #how to remane and standardize NA 
+
+litters_df
+
+```
+
+## Other file formats 
+
+We need to read in an excel spread sheet 
+
+```{r}
+library(readxl)
+mlb_df <- read_excel("data/mlb11.xlsx")
+lotr_words_df <- read_excel("data/LotR_Words.xlsx", range = "B3:D6")
+
+```
+
+## Still more file formats 
+
+Read in a SAS dataset 
+
+```{r}
+library(haven) #used to upload SAS data 
+pulse_df <- read_sas("data/public_pulse_data.sas7bdat")
+
+
+```
+
+##Data export 
+
+```{r}
+write_csv(litters_df, "data/litters")
+
+```
+
+##Why not base R?
+
+```{r}
